@@ -22,14 +22,20 @@ async def on_message(message):
         await message.channel.send('Hello!')
 
     if message.content.startswith('$getinfo'):
-        r = requests.get(url = 'https://royale.pet/api/player/76561198106196691/summary')
-        data = r.json()
-        print(data)
-        summary = data['summary']
-        print(summary)
-        embed = discord.Embed(title='Player Stats for ' + summary['personaname'], colour = discord.Colour.blue())
-        for key, value in summary.items():
-            embed.add_field(name=key, value=value, inline=False)
+        stats_request = requests.get(url = 'https://royale.pet/api/player/76561198106196691/stats')
+        summary_request = requests.get(url = 'https://royale.pet/api/player/76561198106196691/summary')
+        data = stats_request.json()
+        summary_data = summary_request.json()
+        print(summary_data)
+        stats = data['stats']
+        embed = discord.Embed(title='Player Stats for ' + summary_data['summary']['personaname'], colour = discord.Colour.blue())
+        embed.add_field(name='Kills', value=stats['Kills']['value'], inline=False)
+        embed.add_field(name='Deaths', value=stats['Deaths']['value'], inline=False)
+        embed.add_field(name='Games', value=stats['Games']['value'], inline=False)
+        embed.add_field(name='Time Played', value=stats['TimePlayedSeconds']['value'], inline=False)
+        embed.add_field(name='Health Juice Drank', value=stats['HealthJuiceDrank']['value'], inline=False)
+        embed.add_field(name='Damage Dealt', value=stats['DamageDealt']['value'], inline=False)
+
         await message.channel.send(embed=embed) 
 
 client.run(str(os.getenv("TOKEN")))
