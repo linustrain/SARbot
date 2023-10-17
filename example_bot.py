@@ -4,6 +4,8 @@ import discord
 import os
 import requests
 
+steam_id = {}
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -21,9 +23,20 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
 
-    if message.content.startswith('$getinfo'):
-        stats_request = requests.get(url = 'https://royale.pet/api/player/76561198106196691/stats')
-        summary_request = requests.get(url = 'https://royale.pet/api/player/76561198106196691/summary')
+    if message.content.startswith('$setID'):
+        split_message = message.content.split()
+        if len(split_message) > 1:
+            steam_id[message.author.name] = split_message[1]
+            await message.channel.send('Successfully set Steam ID for ' + message.author.name + ': ' + steam_id[message.author.name])
+        else:
+            await message.channel.send('Error setting Steam ID')
+
+    if message.content.startswith('$getInfo'):
+        if message.author.name not in steam_id.keys():
+            await message.channel.send('Please set Steam ID using $setID <SteamID>')
+            return
+        stats_request = requests.get(url = 'https://royale.pet/api/player/' + steam_id[message.author.name] + '/stats')
+        summary_request = requests.get(url = 'https://royale.pet/api/player/' + steam_id[message.author.name] + '/summary')
         data = stats_request.json()
         summary_data = summary_request.json()
         print(summary_data)
