@@ -52,7 +52,7 @@
     "KillsSMG": {"group": "Kill Statistics", "value": 252}, 
     "GamesSquads": {"group": "Squads", "value": 568, "priority": 5}, 
     "MostKillsSquads": {"group": "Squads", "value": 12, "priority": 6}, 
-    "TimePlayedSeconds": {"group": "Miscellaneous", "value": 330130, "priority": 4}, 
+    "TimePlayedSeconds": {"group": "Miscellaneous", "value": 334812, "priority": 4}, 
     "DistanceTraveledIceW2": {"group": "Miscellaneous", "value": 9585, "priority": 6}, 
     "TurkeyWins": {"group": "Miscellaneous", "value": 1}, 
     "TapeUsed": {"group": "Miscellaneous", "value": 3151}, 
